@@ -248,7 +248,7 @@ BundleStreamBuf::Chunk::Chunk(const dtn::data::Bundle &b)
 	// get the stream block of the bundle - drop bundles without it
 	const StreamBlock &block = b.find<StreamBlock>();
 	_seq = block.getSequenceNumber();
-	printf("Sequence Numbers: %d %d\n", _seq, block.getSequenceNumber());
+	//printf("Sequence Numbers: %d %d\n", _seq, block.getSequenceNumber());
 }
 
 BundleStreamBuf::Chunk::~Chunk()
