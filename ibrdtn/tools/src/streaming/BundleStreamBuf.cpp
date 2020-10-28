@@ -147,6 +147,7 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 
 		// check if the sequencenumber is already received
 		if (_in_seq < block.getSequenceNumber()) return;
+		printf("Sequence Numbers: %d %d\n", _in_seq, block.getSequenceNumber());
 
 		// insert the received chunk into the chunk set
 		_chunks.insert(Chunk(b));
