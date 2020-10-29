@@ -192,12 +192,12 @@ int main(int argc, char *argv[])
 			if (_bundle_group) bs.base().set(dtn::data::PrimaryBlock::DESTINATION_IS_SINGLETON, false);
 			std::ostream stream(&bs.rdbuf());
 			stream << std::cin.rdbuf() << std::flush;
-			printf("OI GATA\n");//testing...
 		}
 		// receiver mode
 		else
 		{
 			std::istream stream(&bs.rdbuf());
+			printf("OI GATA\n");//testing...
 			std::cout << stream.rdbuf() << std::flush;
 		}
 
