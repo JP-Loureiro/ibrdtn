@@ -29,6 +29,7 @@
 #include <ibrcommon/net/socket.h>
 #include <ibrcommon/data/File.h>
 #include <iostream>
+#include <fstream>
 #include <unistd.h>
 
 void print_help()
