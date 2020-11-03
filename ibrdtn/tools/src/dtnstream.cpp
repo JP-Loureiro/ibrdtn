@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
 		// receiver mode
 		else
 		{
-			std::istream stream(&bs.rdbuf());
+			std::istream stream(&bs.rdbuf())//;
 			printf("OI GATA\n");//testing...
 			std::cout << stream.rdbuf() << std::flush;
 		}
