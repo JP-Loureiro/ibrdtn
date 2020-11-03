@@ -246,9 +246,13 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 BundleStreamBuf::Chunk::Chunk(const dtn::data::Bundle &b)
  : _bundle(b), _seq(0)
 {
+	std::ofstream outfile;
 	// get the stream block of the bundle - drop bundles without it
 	const StreamBlock &block = b.find<StreamBlock>();
 	_seq = block.getSequenceNumber();
+	outfile.open("test.txt");//testing...
+	outfile << "Teste\n" << std::endl; //testing...
+	outfile.close();
 	//printf("Sequence Numbers: %d %d\n", _seq, block.getSequenceNumber());
 }
 
