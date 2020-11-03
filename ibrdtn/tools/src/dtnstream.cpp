@@ -187,15 +187,14 @@ int main(int argc, char *argv[])
 		// transmitter mode
 		if (_destination != dtn::data::EID())
 		{
-			//std::cout << "TESTE 1 2 TESTE"; 
 			bs.base().destination = _destination;
 			bs.base().setPriority(dtn::data::PrimaryBlock::PRIORITY(_priority));
 			bs.base().lifetime = _lifetime;
 			if (_bundle_encryption) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_ENCRYPT, true);
 			if (_bundle_signed) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_SIGN, true);
 			if (_bundle_group) bs.base().set(dtn::data::PrimaryBlock::DESTINATION_IS_SINGLETON, false);
-  			outfile.open("test.txt");
-			outfile << "Teste\n" << std::endl;
+  			outfile.open("test.txt");//testing...
+			outfile << "Teste\n" << std::endl; //testing...
 			outfile.close();
 			std::ostream stream(&bs.rdbuf());
 			stream << std::cin.rdbuf() << std::flush;
