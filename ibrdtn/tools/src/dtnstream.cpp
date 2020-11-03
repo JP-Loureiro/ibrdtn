@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 	bool _flow_control = false;
 	ibrcommon::File _unixdomain;
 
-	ofstream outfile; //creating a file to write to
+	std::ofstream outfile; //creating a file to write to
 
 	while((opt = getopt(argc, argv, "hg:Gd:t:s:c:C:p:l:ESU:wf")) != -1)
 	{
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 			if (_bundle_signed) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_SIGN, true);
 			if (_bundle_group) bs.base().set(dtn::data::PrimaryBlock::DESTINATION_IS_SINGLETON, false);
   			outfile.open("test.txt");
-			outfile << "Teste\n" << endl;
+			outfile << "Teste\n" << std::endl;
 			outfile.close();
 			std::ostream stream(&bs.rdbuf());
 			stream << std::cin.rdbuf() << std::flush;
