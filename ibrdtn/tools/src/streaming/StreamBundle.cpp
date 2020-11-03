@@ -21,6 +21,7 @@
 
 #include "streaming/StreamBundle.h"
 #include <ibrdtn/data/StreamBlock.h>
+#include <fstream>
 
 StreamBundle::StreamBundle()
  : _ref(ibrcommon::BLOB::create())
