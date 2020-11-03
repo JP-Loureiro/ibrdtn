@@ -190,6 +190,7 @@ int main(int argc, char *argv[])
 			if (_bundle_encryption) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_ENCRYPT, true);
 			if (_bundle_signed) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_SIGN, true);
 			if (_bundle_group) bs.base().set(dtn::data::PrimaryBlock::DESTINATION_IS_SINGLETON, false);
+			std::cout << "OI GATA"; 
 			std::ostream stream(&bs.rdbuf());
 			stream << std::cin.rdbuf() << std::flush;
 		}
@@ -197,7 +198,7 @@ int main(int argc, char *argv[])
 		else
 		{
 			std::istream stream(&bs.rdbuf());
-			printf("OI GATA\n");//testing...
+			//printf("OI GATA\n");//testing...
 			std::cout << stream.rdbuf() << std::flush;
 		}
 
