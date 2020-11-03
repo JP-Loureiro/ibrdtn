@@ -21,6 +21,7 @@
 
 #include "streaming/BundleStreamBuf.h"
 #include <ibrdtn/data/StreamBlock.h>
+#include <fstream>
 #include <ibrcommon/TimeMeasurement.h>
 
 BundleStreamBuf::BundleStreamBuf(dtn::api::Client &client, StreamBundle &chunk, size_t min_buffer, size_t max_buffer, bool wait_seq_zero)
