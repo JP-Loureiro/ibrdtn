@@ -184,7 +184,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 			_chunks_cond.wait(1000);
 		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };
 
-		tm.stop();
+		
 		if (((_receive_timeout > 0) && (tm.getSeconds() > _receive_timeout)) || !_streaming)
 		{
 			// skip the missing bundles and proceed with the last received one
@@ -194,6 +194,8 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 			_streaming = true;
 		}
 	}
+
+	tm.stop();
 
 	// get the first chunk in the buffer
 	const Chunk &c = (*_chunks.begin());
@@ -250,9 +252,9 @@ BundleStreamBuf::Chunk::Chunk(const dtn::data::Bundle &b)
 	// get the stream block of the bundle - drop bundles without it
 	const StreamBlock &block = b.find<StreamBlock>();
 	_seq = block.getSequenceNumber();
-	outfile.open("test.txt", std::ios::app);//testing...
-	outfile << block.getSequenceNumber() << std::endl; //testing...
-	outfile.close();
+	//outfile.open("test.txt", std::ios::app);//testing...
+	//outfile << block.getSequenceNumber() << std::endl; //testing...
+	//outfile.close();
 	//printf("Sequence Numbers: %d %d\n", _seq, block.getSequenceNumber());
 }
 
