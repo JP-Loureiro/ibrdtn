@@ -176,15 +176,19 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	ibrcommon::TimeMeasurement tm;
 	tm.start();
 
+	if((_in_seq != (*_chunks.begin())._seq)){
+		_chunks_cond.wait(1000);
+		_in_seq = (*_chunks.begin())._seq;
+	}
+
 	// while not the right sequence number received -> wait
-	while ((_in_seq != (*_chunks.begin())._seq))
+	/*while ((_in_seq != (*_chunks.begin())._seq))
 	{
 		try {
 			// wait for the next bundle
 			_chunks_cond.wait(1000);
 		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };
 
-		
 		if (((_receive_timeout > 0) && (tm.getSeconds() > _receive_timeout)) || !_streaming)
 		{
 			// skip the missing bundles and proceed with the last received one
@@ -193,7 +197,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 			// set streaming to active
 			_streaming = true;
 		}
-	}
+	}*/
 
 	tm.stop();
 
