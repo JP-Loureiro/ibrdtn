@@ -179,6 +179,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	if((_in_seq != (*_chunks.begin())._seq)){
 		_chunks_cond.wait(1000);
 		_in_seq = (*_chunks.begin())._seq;
+		_streaming = true;
 	}
 
 	// while not the right sequence number received -> wait
