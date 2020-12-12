@@ -184,6 +184,8 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 			_chunks_cond.wait(1000);
 		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };
 
+		tm.stop();
+
 		if (((_receive_timeout > 0) && (tm.getSeconds() > _receive_timeout)) || !_streaming)
 		{
 			// skip the missing bundles and proceed with the last received one
@@ -191,12 +193,8 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 
 			// set streaming to active
 			_streaming = true;
-
-			_chunk_offset = 0;
 		}
 	}
-
-	tm.stop();
 
 	// get the first chunk in the buffer
 	const Chunk &c = (*_chunks.begin());
