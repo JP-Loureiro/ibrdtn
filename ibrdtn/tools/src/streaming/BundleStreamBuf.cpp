@@ -174,16 +174,10 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	}
 
 	ibrcommon::TimeMeasurement tm;
-	//tm.start();
-
-	//if((_in_seq != (*_chunks.begin())._seq)){
-		//_chunks_cond.wait(1000);
-		_in_seq = (*_chunks.begin())._seq;
-		_streaming = true;
-	//}
+	tm.start();
 
 	// while not the right sequence number received -> wait
-	/*while ((_in_seq != (*_chunks.begin())._seq))
+	while ((_in_seq != (*_chunks.begin())._seq))
 	{
 		try {
 			// wait for the next bundle
@@ -197,10 +191,12 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 
 			// set streaming to active
 			_streaming = true;
-		}
-	}*/
 
-	//tm.stop();
+			_chunk_offset = 0;
+		}
+	}
+
+	tm.stop();
 
 	// get the first chunk in the buffer
 	const Chunk &c = (*_chunks.begin());
