@@ -56,6 +56,11 @@ public:
 	 */
 	void setReceiveTimeout(dtn::data::Timeout timeout);
 
+	/**
+	 * Return sequence number buffer from receiving bundles
+	 */
+	std::vector<dtn::data::Number> getSeqNrBuffer();
+
 protected:
 	virtual int sync();
 	virtual std::char_traits<char>::int_type overflow(std::char_traits<char>::int_type = std::char_traits<char>::eof());
@@ -84,6 +89,9 @@ private:
 	std::vector<char> _in_buf;
 	// Output buffer
 	std::vector<char> _out_buf;
+	// Seq. Nr. Buffer
+	std::vector<dtn::data::Number> _seq_nr_buf;
+
 
 	dtn::api::Client &_client;
 	StreamBundle &_chunk;
