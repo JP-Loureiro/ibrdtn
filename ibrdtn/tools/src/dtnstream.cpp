@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
 			std::cout << stream.rdbuf() << std::flush;
 
 			//Code to print the sequence numbers from received bundles:
-			BundleStreamBuf *aux = &bs.rdbuf();
+			BundleStreamBuf aux = bs.rdbuf();
 			std::vector<dtn::data::Number> seqNrs = aux.getSeqNrBuffer();
 			outfile.open("Desktop/test.txt", std::ios::app);
 			for(int n : seqNrs){
