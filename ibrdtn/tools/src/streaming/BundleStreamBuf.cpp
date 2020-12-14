@@ -27,7 +27,7 @@
 BundleStreamBuf::BundleStreamBuf(dtn::api::Client &client, StreamBundle &chunk, size_t min_buffer, size_t max_buffer, bool wait_seq_zero)
  : _in_buf(min_buffer), _out_buf(min_buffer), _client(client), _chunk(chunk),
    _min_buf_size(min_buffer), _max_buf_size(max_buffer), _chunk_offset(0), _in_seq(0),
-   _streaming(wait_seq_zero), _request_ack(false), _flush_request(false), _receive_timeout(0)
+   _streaming(wait_seq_zero), _request_ack(false), _flush_request(false), _receive_timeout(0), _seq_nr_buf(min_buffer)
 {
 	// Initialize get pointer.  This should be zero so that underflow is called upon first read.
 	setg(0, 0, 0);
@@ -146,8 +146,14 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 		// lock the data structures
 		ibrcommon::MutexLock l(_chunks_cond);
 
+
 		// check if the sequencenumber is already received
-		if (_in_seq < block.getSequenceNumber()) return;
+		if (_in_seq < block.getSequenceNumber()) {
+			_seq_nr_buf.push_back(block.getSequenceNumber()*(-1));//if received too late, number appears negative
+			return;
+		}
+
+		_seq_nr_buf.push_back(block.getSequenceNumber());//insert seq. nr. 
 
 		// insert the received chunk into the chunk set
 		_chunks.insert(Chunk(b));
@@ -211,6 +217,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	// copy the data of the last received bundle into the buffer
 	(*stream).read(&_out_buf[0], _out_buf.size());
 
+
 	// get the read bytes
 	size_t bytes = (*stream).gcount();
 
@@ -242,6 +249,10 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	setg(&_out_buf[0], &_out_buf[0], &_out_buf[0] + bytes);
 
 	return std::char_traits<char>::not_eof(_out_buf[0]);
+}
+
+std::vector<dtn::data::Number> BundleStreamBuf::getSeqNrBuffer(){
+	return _seq_nr_buf;   
 }
 
 BundleStreamBuf::Chunk::Chunk(const dtn::data::Bundle &b)
