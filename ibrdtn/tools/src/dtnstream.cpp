@@ -193,9 +193,6 @@ int main(int argc, char *argv[])
 			if (_bundle_encryption) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_ENCRYPT, true);
 			if (_bundle_signed) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_SIGN, true);
 			if (_bundle_group) bs.base().set(dtn::data::PrimaryBlock::DESTINATION_IS_SINGLETON, false);
-  			//outfile.open("test.txt");//testing...
-			//outfile << "Teste\n" << std::endl; //testing...
-			//outfile.close();
 			std::ostream stream(&bs.rdbuf());
 			stream << std::cin.rdbuf() << std::flush;
 		}
@@ -204,6 +201,15 @@ int main(int argc, char *argv[])
 		{
 			std::istream stream(&bs.rdbuf());
 			std::cout << stream.rdbuf() << std::flush;
+
+			//Code to print the sequence numbers from received bundles:
+			BundleStreamBuf *aux = &bs.rdbuf();
+			std::vector<dtn::data::Number> *seqNrs = &aux.getSeqNrBuffer();
+			outfile.open("Desktop/test.txt", std::ios::app);
+			for(int n : seqNrs{
+				outfile << n + "\n" << std::endl;
+			}
+			outfile.close();
 		}
 
 		// Shutdown the client connection.
