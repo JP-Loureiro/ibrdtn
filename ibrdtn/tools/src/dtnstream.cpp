@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
 			BundleStreamBuf aux = bs.rdbuf();
 			std::vector<dtn::data::Number> seqNrs = aux.getSeqNrBuffer();
 			outfile.open("Desktop/test.txt", std::ios::app);
-			for(int n : seqNrs){
+			for(dtn::data::Number n : seqNrs){
 				outfile << n + "\n" << std::endl;
 			}
 			outfile.close();
