@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
 			std::vector<dtn::data::Number> seqNrs = aux.getSeqNrBuffer();
 			outfile.open("test.txt", std::ios::app);
 			for(dtn::data::Number n : seqNrs){
-				outfile << (int)n << '\n';
+				outfile << n << '\n';
 				//outfile << "\n" << std::endl;
 			}
 			outfile.close();
