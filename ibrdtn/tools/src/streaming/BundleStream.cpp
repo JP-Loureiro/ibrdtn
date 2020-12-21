@@ -49,6 +49,10 @@ void BundleStream::setReceiveTimeout(unsigned int timeout)
 	_buf.setReceiveTimeout(timeout);
 }
 
+std::vector<dtn::data::Number> BundleStream::getSeqNrBuffer(){
+	return _buf.getSeqNrBuffer();   
+}
+
 void BundleStream::received(const dtn::data::Bundle &b)
 {
 	// check if the received bundle contains an administrative record
