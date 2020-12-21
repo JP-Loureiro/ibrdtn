@@ -51,6 +51,11 @@ public:
 	 */
 	void setReceiveTimeout(unsigned int timeout);
 
+	/**
+	 * Return sequence number buffer from receiving bundles
+	 */
+	std::vector<dtn::data::Number> getSeqNrBuffer();
+
 protected:
 	/**
 	 * @see dtn::api::Client::received()
