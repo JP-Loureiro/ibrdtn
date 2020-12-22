@@ -201,10 +201,10 @@ int main(int argc, char *argv[])
 		{
 			std::istream stream(&bs.rdbuf());
 			std::cout << stream.rdbuf() << std::flush;
-			
+
 			//Code to print the sequence numbers from received bundles:
 			std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
-			outfile.open("test.txt", std::ios::app);
+			outfile.open("test.txt");
 			for(dtn::data::Number n : seqNrs){
 				outfile << n.toString() << std::endl;
 			}
