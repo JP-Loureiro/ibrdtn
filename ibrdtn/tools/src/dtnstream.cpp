@@ -199,13 +199,14 @@ int main(int argc, char *argv[])
 		// receiver mode
 		else
 		{
+			//Code to print the sequence numbers from received bundles:
+			std::vector<dtn::data::Number> *seqNrs = &(bs.getSeqNrBuffer());
+			outfile.open("test.txt", std::ios::app);
+
+
 			std::istream stream(&bs.rdbuf());
 			std::cout << stream.rdbuf() << std::flush;
 
-			//Code to print the sequence numbers from received bundles:
-			//BundleStreamBuf aux = bs.rdbuf();
-			std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
-			outfile.open("test.txt", std::ios::app);
 			for(dtn::data::Number n : seqNrs){
 				outfile << n.toString() << std::endl;
 			}
