@@ -187,7 +187,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	{
 		try {
 			// wait for the next bundle
-			_chunks_cond.wait(1000);
+			_chunks_cond.wait();
 		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };
 
 		tm.stop();
