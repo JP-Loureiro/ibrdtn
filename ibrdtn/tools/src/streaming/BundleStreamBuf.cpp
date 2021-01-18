@@ -172,6 +172,9 @@ std::char_traits<char>::int_type BundleStreamBuf::underflow()
 
 std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 {
+	ibrcommon::TimeMeasurement tm;
+	tm.start();
+
 	// receive chunks until the next sequence number is received
 	while (_chunks.empty())
 	{
@@ -185,10 +188,10 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	// while not the right sequence number received -> wait
 	while ((_in_seq != (*_chunks.begin())._seq))
 	{
-		try {
+	/*	try {
 			// wait for the next bundle
 			_chunks_cond.wait();
-		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };
+		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };*/
 
 		tm.stop();
 
