@@ -182,9 +182,6 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 		_chunks_cond.wait();
 	}
 
-	ibrcommon::TimeMeasurement tm;
-	tm.start();
-
 	// while not the right sequence number received -> wait
 	while ((_in_seq != (*_chunks.begin())._seq))
 	{
