@@ -148,7 +148,7 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 
 
 		// check if the sequencenumber is already received
-		if (_in_seq < block.getSequenceNumber()) {
+		if (_in_seq > block.getSequenceNumber()) {
 			_seq_nr_buf.push_back(block.getSequenceNumber()*(-1));//if received too late, number appears negative
 			return;
 		}
