@@ -193,6 +193,16 @@ int main(int argc, char *argv[])
 			if (_bundle_encryption) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_ENCRYPT, true);
 			if (_bundle_signed) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_SIGN, true);
 			if (_bundle_group) bs.base().set(dtn::data::PrimaryBlock::DESTINATION_IS_SINGLETON, false);
+			//Code to print the sequence numbers from received bundles:
+			//std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
+			outfile.open("ibrdtn-repo/new.txt", std::ios::out | std::ios::app);
+			outfile << "Just a test!" << std::endl;
+			/*for(dtn::data::Number n : seqNrs){
+				outfile << n.toString() << std::endl;
+			}*/
+			outfile.close();
+
+
 			std::ostream stream(&bs.rdbuf());
 			stream << std::cin.rdbuf() << std::flush;
 		}
@@ -203,14 +213,6 @@ int main(int argc, char *argv[])
 			std::cout << stream.rdbuf() << std::flush;
 
 		}
-			//Code to print the sequence numbers from received bundles:
-			std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
-			outfile.open("ibrdtn-repo/new.txt", std::ios::out | std::ios::app);
-			outfile << "Just a test!" << std::endl;
-			for(dtn::data::Number n : seqNrs){
-				outfile << n.toString() << std::endl;
-			}
-			outfile.close();
 
 		// Shutdown the client connection.
 		bs.close();
