@@ -202,15 +202,15 @@ int main(int argc, char *argv[])
 			std::istream stream(&bs.rdbuf());
 			std::cout << stream.rdbuf() << std::flush;
 
+		}
 			//Code to print the sequence numbers from received bundles:
 			std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
-			outfile.open("ibrdtn-repo/new.txt", std::ios::app);
+			outfile.open("ibrdtn-repo/new.txt", std::ios::out || std::ios::app);
 			outfile << "Just a test!" << std::endl;
 			for(dtn::data::Number n : seqNrs){
 				outfile << n.toString() << std::endl;
 			}
 			outfile.close();
-		}
 
 		// Shutdown the client connection.
 		bs.close();
