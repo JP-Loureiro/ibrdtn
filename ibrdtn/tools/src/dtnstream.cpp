@@ -205,7 +205,7 @@ int main(int argc, char *argv[])
 		}
 			//Code to print the sequence numbers from received bundles:
 			std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
-			outfile.open("ibrdtn-repo/new.txt", std::ios::out || std::ios::app);
+			outfile.open("ibrdtn-repo/new.txt", std::ios::out | std::ios::app);
 			outfile << "Just a test!" << std::endl;
 			for(dtn::data::Number n : seqNrs){
 				outfile << n.toString() << std::endl;
