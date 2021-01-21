@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
 			/*for(dtn::data::Number n : seqNrs){
 				outfile << n.toString() << std::endl;
 			}*/
-			outfile.close();
+			//outfile.close();
 			std::istream stream(&bs.rdbuf());
 			std::cout << stream.rdbuf() << std::flush;
 			
