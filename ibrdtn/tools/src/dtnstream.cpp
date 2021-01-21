@@ -209,17 +209,18 @@ int main(int argc, char *argv[])
 			//std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
 			outfile.open("new.txt", std::ios::app);
 			outfile << "Just a test!" << std::endl;
+			outfile.close();
 			/*for(dtn::data::Number n : seqNrs){
 				outfile << n.toString() << std::endl;
 			}*/
 			//outfile.close();
 			std::istream stream(&bs.rdbuf());
 			std::cout << stream.rdbuf() << std::flush;
-			
-			outfile << "2nd Phase-check!" << std::endl;
-			outfile.close();
 		}
 		
+		outfile.open("new.txt", std::ios::app);
+		outfile << "2nd Phase-check!" << std::endl;
+		outfile.close();
 		// Shutdown the client connection.
 		bs.close();
 		conn.close();
