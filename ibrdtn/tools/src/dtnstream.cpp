@@ -215,8 +215,11 @@ int main(int argc, char *argv[])
 			outfile.close();
 			std::istream stream(&bs.rdbuf());
 			std::cout << stream.rdbuf() << std::flush;
+			
+			outfile << "2nd Phase-check!" << std::endl;
+			outfile.close();
 		}
-
+		
 		// Shutdown the client connection.
 		bs.close();
 		conn.close();
