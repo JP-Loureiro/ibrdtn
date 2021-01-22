@@ -156,7 +156,8 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 		_seq_nr_buf.push_back(block.getSequenceNumber());//insert seq. nr. 
 		std::ofstream outfile; //creating a file to write to
 		outfile.open("hum.txt", std::ios::app);
-		outfile << "2nd Phase-check!" << std::endl;
+		outfile << block.getSequenceNumber().toString() << std::endl;
+		//outfile << "2nd Phase-check!" << std::endl;
 		outfile.close();
 		
 		// insert the received chunk into the chunk set
