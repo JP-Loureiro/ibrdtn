@@ -149,16 +149,21 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 
 		// check if the sequencenumber is already received
 		if (_in_seq > block.getSequenceNumber()) {
-			//_seq_nr_buf.push_back(block.getSequenceNumber()*(-1));//if received too late, number appears negative
+			std::ofstream outfile2; //creating a file to write to
+			outfile2.open("failed.txt", std::ios::app);
+			outfile2 << block.getSequenceNumber().toString() << std::endl;
+			outfile2.close();
 			return;
 		}
 
 		_seq_nr_buf.push_back(block.getSequenceNumber());//insert seq. nr. 
+		
 		std::ofstream outfile; //creating a file to write to
-		outfile.open("hum.txt", std::ios::app);
+		outfile.open("success.txt", std::ios::app);
 		outfile << block.getSequenceNumber().toString() << std::endl;
-		//outfile << "2nd Phase-check!" << std::endl;
 		outfile.close();
+
+
 		
 		// insert the received chunk into the chunk set
 		_chunks.insert(Chunk(b));
@@ -263,14 +268,9 @@ std::vector<dtn::data::Number> BundleStreamBuf::getSeqNrBuffer(){
 BundleStreamBuf::Chunk::Chunk(const dtn::data::Bundle &b)
  : _bundle(b), _seq(0)
 {
-	std::ofstream outfile;
 	// get the stream block of the bundle - drop bundles without it
 	const StreamBlock &block = b.find<StreamBlock>();
 	_seq = block.getSequenceNumber();
-	//outfile.open("test.txt", std::ios::app);//testing...
-	//outfile << block.getSequenceNumber() << std::endl; //testing...
-	//outfile.close();
-	//printf("Sequence Numbers: %d %d\n", _seq, block.getSequenceNumber());
 }
 
 BundleStreamBuf::Chunk::~Chunk()
