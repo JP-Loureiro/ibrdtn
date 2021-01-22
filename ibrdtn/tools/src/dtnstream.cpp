@@ -214,13 +214,19 @@ int main(int argc, char *argv[])
 				outfile << n.toString() << std::endl;
 			}*/
 			//outfile.close();
+			
 			std::istream stream(&bs.rdbuf());
-			std::cout << stream.rdbuf() << std::flush;
+			if (stream.good()){
+				std::cout << stream.rdbuf() << std::flush;
+			}
+			else {
+				outfile.open("new.txt", std::ios::app);
+				outfile << "2nd Phase-check!" << std::endl;
+				outfile.close();
+			}
+		
 		}
 		
-		outfile.open("new.txt", std::ios::app);
-		outfile << "2nd Phase-check!" << std::endl;
-		outfile.close();
 		// Shutdown the client connection.
 		bs.close();
 		conn.close();
