@@ -163,8 +163,18 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 		outfile << block.getSequenceNumber().toString() << std::endl;
 		outfile.close();
 
+	//Ainda por decidir o que fazer:
+	/*	ibrcommon::BLOB::Reference r = b.find<dtn::data::PayloadBlock>().getBLOB();
+		// get stream lock
+		ibrcommon::BLOB::iostream stream = r.iostream();
 
-		
+		// jump to the offset position
+		(*stream).seekg(_chunk_offset, std::ios::beg);
+
+		// copy the data of the last received bundle into the buffer
+		(*stream).read(&_out_buf[0], _out_buf.size());*/
+
+
 		// insert the received chunk into the chunk set
 		_chunks.insert(Chunk(b));
 
