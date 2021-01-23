@@ -209,6 +209,11 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 
 		if (((_receive_timeout > 0) && (tm.getSeconds() > _receive_timeout)) || !_streaming)
 		{
+			std::ofstream outfile; //creating a file to write to
+			outfile.open("failed.txt", std::ios::app);
+			outfile << _in_seq.toString() << std::endl;
+			outfile.close();
+
 			// skip the missing bundles and proceed with the last received one
 			_in_seq = (*_chunks.begin())._seq;
 
