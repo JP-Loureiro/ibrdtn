@@ -193,11 +193,11 @@ int main(int argc, char *argv[])
 			if (_bundle_encryption) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_ENCRYPT, true);
 			if (_bundle_signed) bs.base().set(dtn::data::PrimaryBlock::DTNSEC_REQUEST_SIGN, true);
 			if (_bundle_group) bs.base().set(dtn::data::PrimaryBlock::DESTINATION_IS_SINGLETON, false);
+			
 			//TESTING:
 			outfile.open("new.txt", std::ios::app);
 			outfile << "I am the transmitter!" << std::endl;
 			outfile.close();
-
 
 			std::ostream stream(&bs.rdbuf());
 			stream << std::cin.rdbuf() << std::flush;
@@ -205,25 +205,13 @@ int main(int argc, char *argv[])
 		// receiver mode
 		else
 		{
-			//Code to print the sequence numbers from received bundles:
-			//std::vector<dtn::data::Number> seqNrs = bs.getSeqNrBuffer();
+			//TESTING:
 			outfile.open("new.txt", std::ios::app);
-			outfile << "Just a test!" << std::endl;
+			outfile << "I am the receiver!" << std::endl;
 			outfile.close();
-			/*for(dtn::data::Number n : seqNrs){
-				outfile << n.toString() << std::endl;
-			}*/
-			//outfile.close();
 			
 			std::istream stream(&bs.rdbuf());
-			if (stream.good()){
-				std::cout << stream.rdbuf() << std::flush;
-			}
-			else {
-				outfile.open("new.txt", std::ios::app);
-				outfile << "2nd Phase-check!" << std::endl;
-				outfile.close();
-			}
+			std::cout << stream.rdbuf() << std::flush;
 		
 		}
 		
