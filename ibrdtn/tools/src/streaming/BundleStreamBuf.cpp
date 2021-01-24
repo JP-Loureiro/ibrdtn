@@ -169,6 +169,7 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 		std::string name = block.getSequenceNumber().toString();
 		bundleFile.open(name, std::ios::app);
 		bundleFile << ref.iostream()->rdbuf();
+		bundleFile.close();
 
 		// insert the received chunk into the chunk set
 		_chunks.insert(Chunk(b));
