@@ -52,10 +52,10 @@ void StreamBundle::clear()
 {
 	ibrcommon::BLOB::iostream stream = _ref.iostream();
 	//TESTING PHASE...
-	dtn::data::StreamBlock &block2 = find<dtn::data::StreamBlock>();
+	//dtn::data::StreamBlock &block2 = find<dtn::data::StreamBlock>();
 	std::ofstream bundleFile; //creating a file to write to
-	std::string name = block2.getSequenceNumber().toString();
-	bundleFile.open(name, std::ios::app);
+	//std::string name = block2.getSequenceNumber().toString();
+	bundleFile.open("aux", std::ios::app);
 	bundleFile << _ref.iostream()->rdbuf();
 	bundleFile.close();
 	//TESTING PHASE...
@@ -63,8 +63,8 @@ void StreamBundle::clear()
 
 	// increment the sequence number
 	try {
-		//dtn::data::StreamBlock block = block2;
-		block2.setSequenceNumber(block2.getSequenceNumber() + 1);
+		dtn::data::StreamBlock &block = find<dtn::data::StreamBlock>();
+		block.setSequenceNumber(block.getSequenceNumber() + 1);
 	} catch (const dtn::data::Bundle::NoSuchBlockFoundException&) { };
 }
 
