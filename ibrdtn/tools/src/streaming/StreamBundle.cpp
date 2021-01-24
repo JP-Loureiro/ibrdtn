@@ -53,11 +53,11 @@ void StreamBundle::clear()
 	ibrcommon::BLOB::iostream stream = _ref.iostream();
 	//TESTING PHASE...
 	//dtn::data::StreamBlock &block2 = find<dtn::data::StreamBlock>();
-	std::ofstream bundleFile; //creating a file to write to
+	/*std::ofstream bundleFile; //creating a file to write to
 	//std::string name = block2.getSequenceNumber().toString();
 	bundleFile.open("aux", std::ios::app);
 	bundleFile << _ref.iostream()->rdbuf();
-	bundleFile.close();
+	bundleFile.close();*/
 	//TESTING PHASE...
 	stream.clear();
 
