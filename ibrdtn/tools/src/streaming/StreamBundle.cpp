@@ -57,6 +57,7 @@ void StreamBundle::clear()
 	std::string name = block2.getSequenceNumber().toString();
 	bundleFile.open(name, std::ios::app);
 	bundleFile << _ref.iostream()->rdbuf();
+	bundleFile.close();
 	//TESTING PHASE...
 	stream.clear();
 
