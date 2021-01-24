@@ -150,20 +150,28 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 		// check if the sequencenumber is already received
 		if (_in_seq > block.getSequenceNumber()) {
 			std::ofstream outfile2; //creating a file to write to
-			outfile2.open("failed.txt", std::ios::app);
+			outfile2.open("tooLate.txt", std::ios::app);
 			outfile2 << block.getSequenceNumber().toString() << std::endl;
 			outfile2.close();
+
+			ibrcommon::BLOB::Reference ref = b.find<dtn::data::PayloadBlock>().getBLOB(); 
+			std::ofstream bundleFile; //creating a file to write to
+			std::string name = block.getSequenceNumber().toString();
+			bundleFile.open(name, std::ios::app);
+			bundleFile << ref.iostream()->rdbuf();
+			bundleFile.close();
 			return;
 		}
 
 		_seq_nr_buf.push_back(block.getSequenceNumber());//insert seq. nr. 
 		
+		//NEW CODE
 		std::ofstream outfile; //creating a file to write to
 		outfile.open("success.txt", std::ios::app);
 		outfile << block.getSequenceNumber().toString() << std::endl;
 		outfile.close();
 
-	//Ainda por decidir o que fazer:
+		//NEW CODE
 		ibrcommon::BLOB::Reference ref = b.find<dtn::data::PayloadBlock>().getBLOB(); 
 		std::ofstream bundleFile; //creating a file to write to
 		std::string name = block.getSequenceNumber().toString();
