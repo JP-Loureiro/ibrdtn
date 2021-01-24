@@ -53,7 +53,6 @@ void StreamBundle::clear()
 	ibrcommon::BLOB::iostream stream = _ref.iostream();
 	//TESTING PHASE...
 	dtn::data::StreamBlock &block2 = find<dtn::data::StreamBlock>();
-//	const dtn::data::PayloadBlock &payload = find<dtn::data::PayloadBlock>();
 	std::ofstream bundleFile; //creating a file to write to
 	std::string name = block2.getSequenceNumber().toString();
 	bundleFile.open(name, std::ios::app);
