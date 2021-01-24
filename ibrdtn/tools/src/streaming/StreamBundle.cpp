@@ -63,7 +63,7 @@ void StreamBundle::clear()
 
 	// increment the sequence number
 	try {
-		dtn::data::StreamBlock &block = find<dtn::data::StreamBlock>();
+		dtn::data::StreamBlock block = block2;
 		block.setSequenceNumber(block.getSequenceNumber() + 1);
 	} catch (const dtn::data::Bundle::NoSuchBlockFoundException&) { };
 }
