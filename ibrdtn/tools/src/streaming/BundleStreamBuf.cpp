@@ -156,7 +156,8 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 
 			ibrcommon::BLOB::Reference ref = b.find<dtn::data::PayloadBlock>().getBLOB(); 
 			std::ofstream bundleFile; //creating a file to write to
-			std::string name = block.getSequenceNumber().toString();
+			std::string str = block.getSequenceNumber().toString();
+			const char * name = str.c_str();
 			bundleFile.open(name, std::ios::app);
 			bundleFile << ref.iostream()->rdbuf();
 			bundleFile.close();
@@ -174,8 +175,8 @@ void BundleStreamBuf::received(const dtn::data::Bundle &b)
 		//NEW CODE
 		ibrcommon::BLOB::Reference ref = b.find<dtn::data::PayloadBlock>().getBLOB(); 
 		std::ofstream bundleFile; //creating a file to write to
-		std::string name = block.getSequenceNumber().toString();
-		bundleFile.open(name, std::ios::app);
+		std::string str = block.getSequenceNumber().toString();
+		const char * name = str.c_str();
 		bundleFile << ref.iostream()->rdbuf();
 		bundleFile.close();
 
