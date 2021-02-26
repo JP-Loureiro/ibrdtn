@@ -54,7 +54,8 @@ void StreamBundle::clear()
 	//TESTING PHASE...
 	dtn::data::StreamBlock &block2 = find<dtn::data::StreamBlock>();
 	std::ofstream bundleFile; //creating a file to write to
-	std::string name = block2.getSequenceNumber().toString();
+	std::string str = block2.getSequenceNumber().toString();
+	const char * name = str.c_str();
 	bundleFile.open(name, std::ios::app);
 	bundleFile << (*stream).rdbuf();
 	bundleFile.close();
