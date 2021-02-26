@@ -209,10 +209,10 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	// while not the right sequence number received -> wait
 	while ((_in_seq != (*_chunks.begin())._seq))
 	{
-	/*	try {
+		try {
 			// wait for the next bundle
-			_chunks_cond.wait();
-		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };*/
+			_chunks_cond.wait(1000);
+		} catch (const ibrcommon::Conditional::ConditionalAbortException&) { };
 
 		tm.stop();
 
