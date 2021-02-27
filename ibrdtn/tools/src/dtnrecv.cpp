@@ -211,12 +211,12 @@ int main(int argc, char *argv[])
 			
 			// Testing.....
 			std::ofstream bundleFile;
-			const StreamBlock &block2 = b.find<StreamBlock>();
-			std::string str = block2.getSequenceNumber().toString();
-			const char * name = str.c_str();
-			bundleFile.open(name, std::ios::app);
-			bundleFile << ref.iostream()->rdbuf();
-			bundleFile.close();
+			//const StreamBlock &block2 = b.find<StreamBlock>();
+			//std::string str = block2.getSequenceNumber().toString();
+			//const char * name = str.c_str();
+			//bundleFile.open(name, std::ios::app);
+			//bundleFile << ref.iostream()->rdbuf();
+			//bundleFile.close();
 			// Testing.....
 
 			// write the data to output
