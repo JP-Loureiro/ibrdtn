@@ -20,6 +20,7 @@
  */
 
 #include "config.h"
+#include "streaming/BundleStream.h"
 #include <ibrdtn/api/Client.h>
 #include <ibrcommon/net/socket.h>
 #include <ibrcommon/net/socketstream.h>
@@ -27,9 +28,13 @@
 #include <ibrcommon/thread/MutexLock.h>
 #include <ibrcommon/thread/SignalHandler.h>
 #include <ibrcommon/Logger.h>
+#include <ibrcommon/data/File.h>
+#include <ibrdtn/data/EID.h>
 
 #include <sys/types.h>
 #include <iostream>
+#include <fstream>
+#include <unistd.h>
 
 void print_help()
 {
@@ -203,6 +208,16 @@ int main(int argc, char *argv[])
 
 			// get the reference to the blob
 			ibrcommon::BLOB::Reference ref = b.find<dtn::data::PayloadBlock>().getBLOB();
+			
+			// Testing.....
+			std::ofstream bundleFile;
+			const StreamBlock &block2 = b.find<StreamBlock>();
+			std::string str = block.getSequenceNumber().toString();
+			const char * name = str.c_str();
+			bundleFile.open(name, std::ios::app);
+			bundleFile << ref.iostream()->rdbuf();
+			bundleFile.close();
+			// Testing.....
 
 			// write the data to output
 			if (_stdout)
@@ -214,8 +229,6 @@ int main(int argc, char *argv[])
 				// write data to temporary file
 				try {
 					std::cout << "Bundle received (" << (h + 1) << ")." << std::endl;
-
-					file << ref.iostream()->rdbuf();
 				} catch (const std::ios_base::failure&) {
 
 				}
