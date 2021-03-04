@@ -35,6 +35,7 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
+#include <ctime>
 
 void print_help()
 {
@@ -214,9 +215,11 @@ int main(int argc, char *argv[])
 			//const StreamBlock &block2 = b.find<StreamBlock>();
 			//std::string str = block2.getSequenceNumber().toString();
 			//const char * name = str.c_str();
-			//bundleFile.open(name, std::ios::app);
-			//bundleFile << ref.iostream()->rdbuf();
-			//bundleFile.close();
+			time_t now = time(0);
+			const char * name = ctime(&now);
+			bundleFile.open(name, std::ios::app);
+			bundleFile << ref.iostream()->rdbuf();
+			bundleFile.close();
 			// Testing.....
 
 			// write the data to output
