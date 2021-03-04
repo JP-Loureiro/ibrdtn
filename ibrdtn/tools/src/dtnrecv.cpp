@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
 			// Testing.....
 			std::ofstream bundleFile;
 			std::string str = "reliable";
-    		str = str.append(to_string(nameAux));
+    		str = str.append(std::to_string(nameAux));
    			const char *name = str.c_str(); 
 			bundleFile.open(name, std::ios::app);
 			bundleFile << ref.iostream()->rdbuf();
