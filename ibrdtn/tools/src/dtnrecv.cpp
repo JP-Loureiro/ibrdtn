@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
 	int timeout = 0;
 	int count   = 1;
 	ibrcommon::File unixdomain;
+	int nameAux = 0;
 
 	for (int i = 0; i < argc; ++i)
 	{
@@ -212,14 +213,13 @@ int main(int argc, char *argv[])
 			
 			// Testing.....
 			std::ofstream bundleFile;
-			//const StreamBlock &block2 = b.find<StreamBlock>();
-			//std::string str = block2.getSequenceNumber().toString();
-			//const char * name = str.c_str();
-			time_t now = time(0);
-			const char * name = ctime(&now);
+			std::string str = "reliable";
+    		str = str.append(to_string(nameAux));
+   			const char *name = str.c_str(); 
 			bundleFile.open(name, std::ios::app);
 			bundleFile << ref.iostream()->rdbuf();
 			bundleFile.close();
+			nameAux++;
 			// Testing.....
 
 			// write the data to output
