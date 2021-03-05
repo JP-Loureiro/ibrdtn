@@ -213,6 +213,10 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 		//NEW CODE: Verify if the timeout has already elapsed even if no bundle has arrived
 		tm_ignore.stop();
 		if(tm_ignore.getSeconds() > _receive_timeout){
+			std::ofstream outfile; //creating a file to write to
+			outfile.open("failed.txt", std::ios::app);
+			outfile << _in_seq.toString() << std::endl;
+			outfile.close();
 			_in_seq++;
 			return __underflow();//If timeout is achieved then let's wait for the next bundle!
 		}
