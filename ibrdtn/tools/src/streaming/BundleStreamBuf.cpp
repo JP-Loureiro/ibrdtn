@@ -199,15 +199,16 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 {
 	ibrcommon::TimeMeasurement tm;
 	ibrcommon::TimeMeasurement tm_ignore;//NEW CODE
-	useconds_t secondsCounter=0;
+	useconds_t secondsCounter;
 
 	if(_receive_timeout > 0){	
 		// receive chunks until the next sequence number is received OR TIMEOUT IS ACHIEVED
 		while (_chunks.empty() && (secondsCounter < _receive_timeout))
 		{
 			tm_ignore.start();//NEW CODE
+			std::cout << tm_ignore.getSeconds() << std::endl;
 			// wait for the next bundle
-			_chunks_cond.wait(1000);
+			_chunks_cond.wait();
 			tm_ignore.stop();
 			secondsCounter = secondsCounter + tm_ignore.getSeconds();
 		}
