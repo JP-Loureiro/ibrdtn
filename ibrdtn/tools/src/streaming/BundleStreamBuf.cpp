@@ -200,27 +200,29 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 	ibrcommon::TimeMeasurement tm;
 	ibrcommon::TimeMeasurement tm_ignore;//NEW CODE
 	useconds_t secondsCounter;
+	
+	tm_ignore.start()
 
 	if(_receive_timeout > 0){	
 		// receive chunks until the next sequence number is received OR TIMEOUT IS ACHIEVED
-		while (_chunks.empty() && (secondsCounter < _receive_timeout))
+		while (_chunks.empty() && (tm_ignore.getSeconds() < _receive_timeout))
 		{
-			tm_ignore.start();//NEW CODE
-			std::cout << tm_ignore.getSeconds() << std::endl;
+			//tm_ignore.start();//NEW CODE
+			//std::cout << tm_ignore.getSeconds() << std::endl;
 			// wait for the next bundle
-			_chunks_cond.wait();
-			tm_ignore.stop();
-			secondsCounter = secondsCounter + tm_ignore.getSeconds();
+			_chunks_cond.wait(_receive_timeout);
+			//secondsCounter = secondsCounter + tm_ignore.getSeconds();
 		}
-
+		
+		tm_ignore.stop();
 		//NEW CODE: Verify if the timeout has already elapsed even if no bundle has arrived
-		if(secondsCounter > _receive_timeout){
+		if(tm_ignore.getSeconds() > _receive_timeout){
 			std::ofstream outfile; //creating a file to write to
 			outfile.open("failed.txt", std::ios::app);
 			outfile << _in_seq.toString() << std::endl;
 			outfile.close();
 			_in_seq++;
-			return underflow();//If timeout is achieved then let's wait for the next bundle!
+			return __underflow();//If timeout is achieved then let's wait for the next bundle!
 		}
 	}
 	else {
