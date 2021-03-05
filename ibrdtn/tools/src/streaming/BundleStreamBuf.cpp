@@ -199,20 +199,21 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 {
 	ibrcommon::TimeMeasurement tm;
 	ibrcommon::TimeMeasurement tm_ignore;//NEW CODE
+	std::float secondsCounter = 0;
 
 	if(_receive_timeout > 0){	
-		tm_ignore.start();//NEW CODE
-
 		// receive chunks until the next sequence number is received OR TIMEOUT IS ACHIEVED
-		while (_chunks.empty() && (tm_ignore.getSeconds() < _receive_timeout))
+		while (_chunks.empty() && (secondsCounter < _receive_timeout))
 		{
+			tm_ignore.start();//NEW CODE
 			// wait for the next bundle
-			_chunks_cond.wait();
+			_chunks_cond.wait(1000);
+			tm_ignore.stop();
+			secondsCounter = secondsCounter + tm_ignore.getSeconds();
 		}
 
 		//NEW CODE: Verify if the timeout has already elapsed even if no bundle has arrived
-		tm_ignore.stop();
-		if(tm_ignore.getSeconds() > _receive_timeout){
+		if(secondsCounter > _receive_timeout){
 			std::ofstream outfile; //creating a file to write to
 			outfile.open("failed.txt", std::ios::app);
 			outfile << _in_seq.toString() << std::endl;
