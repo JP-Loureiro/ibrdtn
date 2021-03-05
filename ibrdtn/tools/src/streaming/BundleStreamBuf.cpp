@@ -219,7 +219,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 			outfile << _in_seq.toString() << std::endl;
 			outfile.close();
 			_in_seq++;
-			return __underflow();//If timeout is achieved then let's wait for the next bundle!
+			return underflow();//If timeout is achieved then let's wait for the next bundle!
 		}
 	}
 	else {
