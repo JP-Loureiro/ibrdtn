@@ -198,15 +198,35 @@ std::char_traits<char>::int_type BundleStreamBuf::underflow()
 std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 {
 	ibrcommon::TimeMeasurement tm;
-	tm.start();
+	ibrcommon::TimeMeasurement tm_ignore;//NEW CODE
 
-	// receive chunks until the next sequence number is received
-	while (_chunks.empty())
-	{
-		// wait for the next bundle
-		_chunks_cond.wait();
+	if(_receive_timeout > 0){	
+		tm_ignore.start();//NEW CODE
+
+		// receive chunks until the next sequence number is received OR TIMEOUT IS ACHIEVED
+		while (_chunks.empty() && (tm_ignore.getSeconds() < _receive_timeout))
+		{
+			// wait for the next bundle
+			_chunks_cond.wait();
+		}
+
+		//NEW CODE: Verify if the timeout has already elapsed even if no bundle has arrived
+		tm_ignore.stop();
+		if(tm_ignore.getSeconds() > _receive_timeout){
+			_in_seq++;
+			return __underflow();//If timeout is achieved then let's wait for the next bundle!
+		}
+	}
+	else {
+		// receive chunks until the next sequence number is received
+		while (_chunks.empty())
+		{
+			// wait for the next bundle
+			_chunks_cond.wait();
+		}
 	}
 
+	tm.start();
 	// while not the right sequence number received -> wait
 	while ((_in_seq != (*_chunks.begin())._seq))
 	{
