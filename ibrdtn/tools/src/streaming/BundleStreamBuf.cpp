@@ -199,7 +199,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 {
 	ibrcommon::TimeMeasurement tm;
 	ibrcommon::TimeMeasurement tm_ignore;//NEW CODE
-	useconds_t secondsCounter;
+	useconds_t secondsCounter=0;
 
 	if(_receive_timeout > 0){	
 		// receive chunks until the next sequence number is received OR TIMEOUT IS ACHIEVED
