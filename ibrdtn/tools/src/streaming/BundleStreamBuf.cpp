@@ -210,7 +210,7 @@ std::char_traits<char>::int_type BundleStreamBuf::__underflow()
 			//tm_ignore.start();//NEW CODE
 			//std::cout << tm_ignore.getSeconds() << std::endl;
 			// wait for the next bundle
-			_chunks_cond.wait(_receive_timeout);
+			_chunks_cond.wait(_receive_timeout*1000);
 			//secondsCounter = secondsCounter + tm_ignore.getSeconds();
 		}
 		
